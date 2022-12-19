@@ -1,28 +1,29 @@
 class Solution {
-    map<int , set<int>>g;
 public:
-    bool validPath(int n, vector<vector<int>>& edges, int s, int d) {
+    bool dfs(vector<vector<int>> &V, vector<bool> &vis, int source, int destination){
 
-        vector<bool>v(n , false);
-        for(auto it : edges){
-            g[it[0]].insert(it[1]);
-            g[it[1]].insert(it[0]);
+        if(source == destination)  return true;
+
+        vis[source] = true;
+        bool res = false;
+
+        for(auto v : V[source]){
+           if(!vis[v])   res |= dfs(V, vis, v, destination);
         }
-        bool f = false;
-        dfs(v , s , d,f);
-        return f;
+
+        return res;
     }
-    void dfs(vector<bool>&v , int s , int d , bool & valid ){
-        v[s] = true;
-        if(s == d){
-            valid = true;
-            return ;
+
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+
+        vector<vector<int>> V(n);
+        vector<bool> vis(n, false);
+
+        for(auto & edge : edges){
+            V[edge[0]].push_back(edge[1]);
+            V[edge[1]].push_back(edge[0]);
         }
-        auto st = g[s];        
-        for(auto i : st){
-            if(!v[i]){
-                dfs(v , i , d , valid);
-            }
-        }
+
+        return(dfs(V, vis, source, destination));
     }
 };
