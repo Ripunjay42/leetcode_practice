@@ -1,3 +1,4 @@
+
 class MyStack {
     queue<int> q;
 public:
