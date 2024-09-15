@@ -1,25 +1,19 @@
 class Solution {
+private:
+    vector<string> mRes;
 public:
-void solve(int n , int start , int close, string temp ,vector<string>&result)
-{
-    if(temp.size()==n*2)
+    vector<string> generateParenthesis(int n) 
     {
-        result.push_back(temp);
-        return ; 
+        helper(n, 0, 0, "");
+        return mRes;
     }
-    if(start < n)
-    {
-        solve(n,start + 1, close,temp + "(", result);
+     
+    void helper(int n, int open, int close, string s) {
+        if (open == n && close == n) mRes.push_back(s);
+        
+        if (open < n) helper(n, open + 1, close, s + "(");
+        
+        if (close < open) helper(n, open, close+1, s + ")");
     }
-    if(close < start )
-    {
-        solve(n,start, close + 1,temp + ")", result);
-    }
- }
-vector<string> generateParenthesis(int n) 
-{
-    vector<string>result;
-    solve(n,0, 0,"", result);
-    return result;
-}
+
 };
