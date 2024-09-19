@@ -4,24 +4,19 @@ public:
     {
         unordered_map<int,int> mp;
         stack<int> st;
-        for(int i=nums2.size()-1;i>=0;i--)
-        {
-            while(!st.empty() && nums2[i]>st.top())
-            {
+        for(int i=nums2.size()-1;i>=0;i--){
+            while(!st.empty() && nums2[i]>st.top()){
                 st.pop();
             }
-            if(!st.empty())
-            {
+            if(!st.empty()){
                 mp[nums2[i]]=st.top();
             }
-            else
-            {
+            else{
                 mp[nums2[i]]=-1;
             }
             st.push(nums2[i]);
         }
-        for(int i=0;i<nums1.size();i++)
-        {
+        for(int i=0;i<nums1.size();i++){
             nums1[i]=mp[nums1[i]];
         }
         return nums1;
